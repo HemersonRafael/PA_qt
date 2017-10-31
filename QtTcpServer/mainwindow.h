@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
+#include "myserver.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +19,10 @@ public:
 
 private:
   Ui::MainWindow *ui;
+  MyServer Server;
+
+public slots:
+  void showMessage(QString msg);
 };
 
 #endif // MAINWINDOW_H

@@ -3,6 +3,8 @@
 
 #include <QTcpServer>
 #include <QDebug>
+#include <QStringList>
+
 #include "mythread.h"
 #include "datastorage.h"
 
@@ -19,11 +21,21 @@ public:
    * @param parent eh o pai do objeto (nao usado)
    */
   MyServer(QObject *parent = 0);
-  void StartServer();
+  /**
+   * @brief StartServer start the TCP server
+   */
+  void startServer();
+  /**
+   * @brief getIPList return a list of IPs used by server
+   * @return
+   */
+  QStringList getIPList();
 
 signals:
+  void message(QString);
 
 public slots:
+  void receiveMsg(QString str);
 
 protected:
   /**
@@ -40,6 +52,7 @@ private:
    * de dados para diversas conexoes diferentes
    */
   DataStorage storage;
+  QStringList iplist;
 };
 
 #endif // MYSERVER_H

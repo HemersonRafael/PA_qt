@@ -28,6 +28,7 @@ public:
 
 signals:
   void error(QTcpSocket::SocketError socketerror);
+  void message(QString);
 
 public slots:
   void readyRead();
@@ -39,6 +40,7 @@ private:
   int* ok;
   QHostAddress peerAddress;
   DataStorage *storage;
+  QString str;
 };
 
 #endif // MYTHREAD_H
