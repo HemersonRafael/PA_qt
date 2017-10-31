@@ -56,7 +56,7 @@ void MainWindow::putData(){
 
       qDebug() << str;
       qDebug() << socket->write(str.toStdString().c_str()) << " bytes written";
-      ui->textBrowser->setPlainText(str);
+      ui->textBrowser->append(str);
       if(socket->waitForBytesWritten(3000)){
         qDebug() << "wrote";
       }
