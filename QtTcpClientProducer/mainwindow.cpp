@@ -3,6 +3,8 @@
 #include <QDateTime>
 #include <QString>
 #include <QTextBrowser>
+#include <QTimer>
+#include<QTime>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent), ui(new Ui::MainWindow){
@@ -19,7 +21,12 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->pushButtonConnectStart,
           SIGNAL(clicked(bool)),
           this,
-          SLOT(putData()));
+          SLOT(startTime()));
+  connect(ui->pushButtonConnectStop,
+          SIGNAL(clicked(bool)),
+          this,
+          SLOT(stopTime()));
+
 }
 
 void MainWindow::tcpConnect(){
@@ -44,10 +51,27 @@ void MainWindow::tcpDisconnect()
 
 }
 
+void MainWindow::startTime()
+{
+    timer = startTimer(ui->horizontalSliderTiming->value()*1000);
+}
+
+void MainWindow::stopTime()
+{
+    killTimer(timer);
+}
+
+void MainWindow::timerEvent(QTimerEvent *e)
+{
+    putData();
+
+}
+
 void MainWindow::putData(){
   QDateTime datetime;
   QString str;
   qint64 msecdate;
+
 
   if(socket->state()== QAbstractSocket::ConnectedState){
 
@@ -66,5 +90,12 @@ void MainWindow::putData(){
 
 MainWindow::~MainWindow(){
   delete socket;
-  delete ui;
+    delete ui;
+}
+
+
+
+void MainWindow::on_actionQuit_triggered()
+{
+    close();
 }
